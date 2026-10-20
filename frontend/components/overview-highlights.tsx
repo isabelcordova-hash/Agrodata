@@ -1,0 +1,14 @@
+import { ArrowUpRight, MapPin, Sprout } from "lucide-react";
+
+type Sample = { year: number; yield_value: number };
+const fmt = (n: number | null | undefined) => n == null ? "—" : n.toLocaleString("es-PE", {maximumFractionDigits: 2});
+export function OverviewHighlights({history, baseline, forecast, crop, department, onExplore}: {history: Sample[]; baseline: number | null; forecast?: number; crop: string; department: string; onExplore: () => void}) {
+  const values = history.map(r => r.yield_value);
+  const min = Math.min(...values), max = Math.max(...values);
+  const points = history.map((r, i) => `${18+i*264/Math.max(history.length-1,1)},${103-(r.yield_value-min)/Math.max(max-min,.01)*66}`).join(" ");
+  return <section className="overview-highlights">
+    <article className="yield-orbit-card"><div><span className="eyebrow">TU PRÓXIMA CAMPAÑA</span><h2>Horizonte 2027</h2><p>{crop} · {department || "Perú"}</p><span className="orbit-caption">Rendimiento proyectado</span></div><div className="yield-orbit"><svg viewBox="0 0 140 140" aria-hidden="true"><circle cx="70" cy="70" r="59" fill="none" stroke="#eaf0df" strokeWidth="15"/><circle cx="70" cy="70" r="59" fill="none" stroke="#14532d" strokeWidth="15" strokeDasharray="235 371" transform="rotate(-90 70 70)"/><circle cx="70" cy="70" r="59" fill="none" stroke="#84cc16" strokeWidth="15" strokeDasharray="95 371" strokeDashoffset="-244" transform="rotate(-90 70 70)"/></svg><div><strong>{fmt(forecast)}</strong><small>ton/ha</small></div></div><div className="orbit-footer"><Sprout size={15}/><span>Base de 5 años</span><b>{fmt(baseline)} ton/ha</b></div></article>
+    <article className="growth-card"><div className="growth-heading"><span className="eyebrow">PULSO DEL CULTIVO</span><span className="subtle-badge">Histórico</span></div><h2>Una tendencia que cuenta.</h2>{history.length>0?<><svg className="mini-trend" viewBox="0 0 300 125" role="img" aria-label={`Tendencia histórica de rendimiento de ${crop}`}><path d="M18 40H282M18 75H282M18 110H282M70 20V110M140 20V110M210 20V110" fill="none" stroke="#e8ede3" strokeWidth="1"/><polyline points={points} fill="none" stroke="#14532d" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round"/>{history.length>0&&<circle cx="282" cy={103-(history.at(-1)!.yield_value-min)/Math.max(max-min,.01)*66} r="5" fill="#84cc16" stroke="white" strokeWidth="3"/>}</svg><div className="growth-years"><span>{history[0].year}</span><span>Rendimiento · ton/ha</span><span>{history.at(-1)!.year}</span></div></>:<p className="highlight-empty">Selecciona un cultivo con historial para ver su tendencia.</p>}</article>
+    <button className="territory-card" onClick={onExplore}><img src="/images/field-illustration.svg" alt=""/><div><span><MapPin size={13}/> INTELIGENCIA TERRITORIAL</span><strong>Encuentra tu<br/>próxima oportunidad.</strong><span className="territory-link">Explorar distritos <ArrowUpRight size={19}/></span></div></button>
+  </section>;
+}

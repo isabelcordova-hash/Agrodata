@@ -1,0 +1,30 @@
+@font-face {
+  font-family: "Old Standard TT";
+  src: url("/fonts/old-standard-tt/regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Old Standard TT";
+  src: url("/fonts/old-standard-tt/italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+.welcome-copy h1,
+.freemium-landing .welcome-copy h1,
+.page-heading h1 {
+  font-family: "Old Standard TT", Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+}
+
+.welcome-copy h1 em {
+  font-family: inherit;
+  font-style: italic;
+  font-weight: 400;
+}

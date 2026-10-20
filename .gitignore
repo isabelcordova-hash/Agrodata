@@ -1,0 +1,15 @@
+node_modules/
+.next/
+.venv/
+__pycache__/
+.env
+.pgdata/
+*.log
+.pytest_cache/
+
+.next-production/
+
+.qa/
+
+.env.local
+.env.*.local
